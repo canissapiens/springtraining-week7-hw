@@ -1,0 +1,148 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Cars:: car list</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="./css/bootstrap.min.css">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/starter-template.css}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" th:classappend="@{active}">
+                <a class="nav-link" th:href="@{/cars}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cars/add-car}">Dodaj</a>
+            </li>
+            <!--  <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>  -->
+            <!--  <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>  -->
+        </ul>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/cars/search-car}" th:method="@{get}">
+            <input class="form-control mr-sm-2" type="text" placeholder="marka lub rok, rok" aria-label="Search"
+                   name="searchstring">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h1>Car List</h1>
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+
+            <table th:class="table">
+                <tr>
+                    <th th:text="Id"></th>
+                    <th th:text="Marka"></th>
+                    <th th:text="Model"></th>
+                    <th th:text="Rocznik"></th>
+                    <th th:text="Edytuj"></th>
+                </tr>
+
+                <tr th:each="car: ${cars}">
+                    <td th:text="${car.carId}"></td>
+                    <td th:text="${car.carBrand}"></td>
+                    <td th:text="${car.carModel}"></td>
+                    <td th:text="${car.carMnfdYear}"></td>
+
+                    <td>
+                        <form class="d-inline" th:action="@{/cars/edit-car}" th:method="@{get}">
+                            <input type="hidden" name="caridentifier" th:value="${car.carId}">
+                            <input type="submit" class="btn btn-sm btn-outline-primary" value="Edytuj">
+                        </form>
+
+                        <form class="d-inline" th:action="@{/cars/delete-car}" th:method="@{get}">
+                            <input type="hidden" name="caridentifier" th:value="${car.carId}">
+                            <input type="submit" class="btn btn-sm btn-outline-danger" value="Usuń">
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <br/>
+
+            <!--      <form th:action="@{/movies}" th:object="${newMovie}" method="POST">
+                    <table>
+                      <tr>
+                        <td>Title:</td>
+                        <td><input type="text" th:field="*{title}"></td>
+                      </tr>
+                      <tr>
+                        <td>Rok:</td>
+                        <td><input th:type="text" th:field="*{year}"></td>
+                      </tr>
+                      <tr>
+                        <td>Producent:</td>
+                        <td><input type="text" th:field="*{producer}"></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                          <input type="submit" class="btn btn-outline-primary" value="Dodaj film"></input>
+                        </td>
+                      </tr>
+                    </table>
+                  </form> -->
+            <br/>
+
+            <br/>
+        </div><!-- column -->
+        <div class="col-2" style="background-color: #7abaff"></div>
+    </div><!-- row -->
+</main><!-- /.container -->
+<script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery-slim.min.js"><\/script>')</script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
